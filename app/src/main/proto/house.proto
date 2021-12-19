@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ashwin.android.grpc";
+option java_outer_classname = "HouseProto";
+
+package houseservice;
+
+message House {
+    int32 id = 1;
+    string number = 2;
+    string street = 3;
+    float area = 4;
+}
+
+message HousesBySizeRequest {
+    int32 minArea = 1;
+}
+
+message HousesBySizeResponse {
+    repeated int32 ids = 1;
+}
+
+message HouseRequest {
+    int32 id = 1;
+}
+
+message HouseResponse {
+    House house = 1;
+}
+
+message HousesRequest {
+    repeated int32 ids = 1;
+}
+
+message HousesResponse {
+    repeated House houses = 1;
+}
+
+message NoParams {}
+
+service HouseService {
+    rpc getHousesBySize(HousesBySizeRequest) returns (HousesBySizeResponse) {}
+    rpc getHouse(HouseRequest) returns (HouseResponse) {}
+    rpc getHouses(NoParams) returns (HousesResponse) {}
+    rpc getHousesByIds(HousesRequest) returns (HousesResponse) {}
+}
